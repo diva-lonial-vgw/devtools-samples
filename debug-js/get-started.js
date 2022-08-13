@@ -20,6 +20,7 @@ function onClickAdd() {
   }
   updateAddLabel();
 }
+
 function onClickMultiply() {
   if (!inputsAreEmpty()) {
     label.textContent = 'Error: one or both inputs are empty.';
@@ -36,6 +37,23 @@ function onClickDivide() {
   updateDivideLabel();
 }
 
+function onClickSubtract() {
+  if (inputsAreEmpty()) {
+    label.textContent = 'Error: one or both inputs are empty.';
+    return;
+  }
+  updateSubtractLabel();
+}
+
+
+function onClickSave() {
+  if (labelisempty()) {
+    savedHistory.textContent = 'Error: no result to save';
+    return;
+  }
+  updateSaveLabel();
+}
+
 function inputsAreEmpty() {
   if (getNumber1() === '' || getNumber2() === '') {
     return true;
@@ -43,18 +61,29 @@ function inputsAreEmpty() {
     return false;
   }
 }
+
+function labelIsEmpty() {
+  if (getLabel() === '') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function updateAddLabel() {
   var addend1 = getNumber1();
   var addend2 = getNumber2();
   var sum = addend1 + addend2;
   label.textContent = addend1 + ' + ' + addend2 + ' = ' + sum;
 }
+
 function updateMultiplyLabel() {
   var addend1 = getNumber1();
   var addend2 = getNumber2();
   var result = addend1 ** addend2;
   label.textContent = addend1 + ' x ' + addend2 + ' = ' + result;
 }
+
 function updateDivideLabel() {
   var addend1 = getNumber1();
   var addend2 = getNumber2();
@@ -62,14 +91,47 @@ function updateDivideLabel() {
   label.textContent = addend1 + ' / ' + addend2 + ' = ' + result;
 }
 
+function updateSubtractLabel() {
+  var addend1 = getNumber1();
+  var addend2 = getNumber2();
+  var result = addend1 - addend2;
+  label.textContent = addend1 + ' - ' + addend2 + ' = ' + result;
+}
+
+var results = []
+function updateSaveLabel() {
+  results.push(label.textContent);
+  
+  var combined = ""
+
+  results.forEach( res => {
+    if (res.contains("+")) { 
+      combined += `<div style="color:red"> ${res}</div>`
+    } else if (res.contains("x")) { 
+      combined += `<div style="color:blue"> ${res}</div>`
+    } else  if (res.contains("/")){ 
+      combined += `<div style="color:transparent"> ${res}</div>`
+    }
+  })
+  
+  savedHistory.innerHTML = combined
+}
+
 function getNumber1() {
   return inputs[0].value;
 }
+
 function getNumber2() {
   return inputs[1].value;
 }
+
+function getLabel() {
+  return label.textContent;
+}
+
 var inputs = document.querySelectorAll('input');
 var label = document.querySelector('p');
+var savedHistory = document.querySelector('#history');
 
 var addButton = document.getElementById('addButton');
 addButton.addEventListener('click', onClickAdd);
@@ -79,3 +141,9 @@ multiplyButton.addEventListener('click', onClickMultiply);
 
 var divideButton = document.getElementById('divideButton');
 divideButton.addEventListener('click', onClickAdd);
+
+var subtractButton = document.getElementById('subtractButton');
+subtractButton.addEventListener('click', onClickSubtract);
+
+var saveButton = document.getElementById('saveButton');
+saveButton.addEventListener('click', onClickSave);
