@@ -11,6 +11,8 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License. */
+
+
 function onClickAdd() {
   if (inputsAreEmpty()) {
     label.textContent = 'Error: one or both inputs are empty.';
@@ -19,12 +21,21 @@ function onClickAdd() {
   updateAddLabel();
 }
 function onClickMultiply() {
-  if (inputsAreEmpty()) {
+  if (!inputsAreEmpty()) {
     label.textContent = 'Error: one or both inputs are empty.';
     return;
   }
   updateMultiplyLabel();
 }
+
+function onClickDivide() {
+  if (inputsAreEmpty()) {
+    label.textContent = 'Error: one or both inputs are empty.';
+    return;
+  }
+  updateDivideLabel();
+}
+
 function inputsAreEmpty() {
   if (getNumber1() === '' || getNumber2() === '') {
     return true;
@@ -41,9 +52,16 @@ function updateAddLabel() {
 function updateMultiplyLabel() {
   var addend1 = getNumber1();
   var addend2 = getNumber2();
-  var sum = addend1 * addend2;
-  label.textContent = addend1 + ' x ' + addend2 + ' = ' + sum;
+  var result = addend1 ** addend2;
+  label.textContent = addend1 + ' x ' + addend2 + ' = ' + result;
 }
+function updateDivideLabel() {
+  var addend1 = getNumber1();
+  var addend2 = getNumber2();
+  var result = addend1 / addend2;
+  label.textContent = addend1 + ' / ' + addend2 + ' = ' + result;
+}
+
 function getNumber1() {
   return inputs[0].value;
 }
@@ -58,3 +76,6 @@ addButton.addEventListener('click', onClickAdd);
 
 var multiplyButton = document.getElementById('multiplyButton');
 multiplyButton.addEventListener('click', onClickMultiply);
+
+var divideButton = document.getElementById('divideButton');
+divideButton.addEventListener('click', onClickAdd);
