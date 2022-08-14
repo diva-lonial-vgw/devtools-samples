@@ -48,7 +48,12 @@ function onClickSubtract() {
 
 function onClickSave() {
   if (labelisempty()) {
-    savedHistory.textContent = 'Error: no result to save';
+    return;
+  }
+  if (labelIsDuplicate()) {
+    return;
+  }
+  if (labelIsError()) {
     return;
   }
   updateSaveLabel();
@@ -64,6 +69,22 @@ function inputsAreEmpty() {
 
 function labelIsEmpty() {
   if (getLabel() === '') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function labelIsDuplicate() {
+  if (getLabel() === results[0]) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function labelIsError() {
+  if (getLabel().includes("Error:")) {
     return true;
   } else {
     return false;
@@ -93,28 +114,35 @@ function updateDivideLabel() {
 
 function updateSubtractLabel() {
   var addend1 = getNumber1();
-  var addend2 = getNumber2();
+  var addend2 = getNumber1();
   var result = addend1 - addend2;
   label.textContent = addend1 + ' - ' + addend2 + ' = ' + result;
 }
 
 var results = []
 function updateSaveLabel() {
-  results.push(label.textContent);
+  results.unshift(label.textContent);
   
   var combined = ""
-
-  results.forEach( res => {
-    if (res.contains("+")) { 
-      combined += `<div style="color:red"> ${res}</div>`
-    } else if (res.contains("x")) { 
-      combined += `<div style="color:blue"> ${res}</div>`
-    } else  if (res.contains("/")){ 
-      combined += `<div style="color:transparent"> ${res}</div>`
-    }
+  results.forEach((res, index) => {
+    const colour = getColour(res)
+    const style = getStyle(index)
+    combined += `<div style="color:${colour ?? "#ff000000"}; font-weight: ${style};"> ${res}</div>`
   })
-  
+
   savedHistory.innerHTML = combined
+    }
+
+function getColour(res) {
+  if (res.includes("+")) { 
+    return 'red' 
+  } else if (res.includes("x")) { 
+    return 'blue' 
+    }
+}
+  
+function getStyle(index) {
+  return index < 1 ? "bold" : "normal"
 }
 
 function getNumber1() {
