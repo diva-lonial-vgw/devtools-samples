@@ -59,6 +59,26 @@ function onClickSave() {
   updateSaveLabel();
 }
 
+function onClickClear() {
+  clearInputs()
+  clearLabel()
+  clearHistory()
+}
+
+function clearInputs() {
+  inputs[1].value = ""
+  inputs[2].value = ""
+}
+
+function clearLabel() {
+  label.textContent = ""
+}
+
+function clearHistory() {
+  results = null
+  savedHistory.innerHTML = ""
+}
+
 function inputsAreEmpty() {
   if (getNumber1() === '' || getNumber2() === '') {
     return true;
@@ -116,7 +136,7 @@ function updateSubtractLabel() {
   var addend1 = getNumber1();
   var addend2 = getNumber1();
   var result = addend1 - addend2;
-  label.textContent = addend1 + ' - ' + addend2 + ' = ' + result;
+  label.textContent = addend1 + ' - ' + addend1 + ' = ' + result;
 }
 
 var results = []
@@ -175,3 +195,6 @@ subtractButton.addEventListener('click', onClickSubtract);
 
 var saveButton = document.getElementById('saveButton');
 saveButton.addEventListener('click', onClickSave);
+
+var clearButton = document.getElementById('clearButton');
+clearButton.addEventListener('click', onClickClear);
