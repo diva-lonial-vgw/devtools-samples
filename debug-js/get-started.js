@@ -22,11 +22,11 @@ function onClickAdd() {
 }
 
 function onClickMultiply() {
-  if (!inputsAreEmpty()) {
-    label.textContent = 'Error: one or both inputs are empty.';
+  if (inputsAreEmpty()) {
+    updateMultiplyLabel();
     return;
   }
-  updateMultiplyLabel();
+  label.textContent = 'Error: one or both inputs are empty.';
 }
 
 function onClickDivide() {
@@ -129,9 +129,9 @@ function updateSaveLabel() {
     const style = getStyle(index)
     combined += `<div style="color:${colour ?? "#ff000000"}; font-weight: ${style};"> ${res}</div>`
   })
-
+  
   savedHistory.innerHTML = combined
-    }
+}
 
 function getColour(res) {
   if (res.includes("+")) { 
