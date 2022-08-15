@@ -65,6 +65,13 @@ function onClickClear() {
   clearHistory()
 }
 
+function onClickAns() {
+  if (noSavedResults()) { 
+    return;
+  }
+  updateInputs();
+}
+
 function clearInputs() {
   inputs[1].value = ""
   inputs[2].value = ""
@@ -105,6 +112,14 @@ function labelIsDuplicate() {
 
 function labelIsError() {
   if (getLabel().includes("Error:")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function noSavedResults() {
+  if (results.length === 0) {
     return true;
   } else {
     return false;
@@ -153,6 +168,12 @@ function updateSaveLabel() {
   savedHistory.innerHTML = combined
 }
 
+function updateInputs() {
+  var lastValue = results[results.length]
+  inputs[0].value = lastValue
+  inputs[1].value = ""
+}
+
 function getColour(res) {
   if (res.includes("+")) { 
     return 'red' 
@@ -198,3 +219,6 @@ saveButton.addEventListener('click', onClickSave);
 
 var clearButton = document.getElementById('clearButton');
 clearButton.addEventListener('click', onClickClear);
+
+var ansButton = document.getElementById('ansButton');
+ansButton.addEventListener('click', onClickAns);
