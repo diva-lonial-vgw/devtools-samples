@@ -177,9 +177,13 @@ function updateInputs() {
 function getColour(res) {
   if (res.includes("+")) { 
     return 'red' 
-  } else if (res.includes("x")) { 
+  } 
+  else if (res.includes("x")) { 
     return 'blue' 
     }
+  else if (res.includes("-")) { 
+    return 'purple' 
+  }
 }
   
 function getStyle(index) {
