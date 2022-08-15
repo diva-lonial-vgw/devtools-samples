@@ -82,7 +82,7 @@ function clearLabel() {
 }
 
 function clearHistory() {
-  results = null
+  savedResults = null
   savedHistory.innerHTML = ""
 }
 
@@ -103,7 +103,7 @@ function labelIsEmpty() {
 }
 
 function labelIsDuplicate() {
-  if (getLabel() === results[0]) {
+  if (getLabel() === savedResults[0]) {
     return true;
   } else {
     return false;
@@ -119,7 +119,7 @@ function labelIsError() {
 }
 
 function noSavedResults() {
-  if (results.length === 0) {
+  if (savedResults.length === 0) {
     return true;
   } else {
     return false;
@@ -127,39 +127,39 @@ function noSavedResults() {
 }
 
 function updateAddLabel() {
-  var addend1 = getNumber1();
-  var addend2 = getNumber2();
-  var sum = addend1 + addend2;
-  label.textContent = addend1 + ' + ' + addend2 + ' = ' + sum;
+  var number1 = getNumber1();
+  var number2 = getNumber2();
+  var sum = number1 + number2;
+  label.textContent = number1 + ' + ' + number2 + ' = ' + sum;
 }
 
 function updateMultiplyLabel() {
-  var addend1 = getNumber1();
-  var addend2 = getNumber2();
-  var result = addend1 ** addend2;
-  label.textContent = addend1 + ' x ' + addend2 + ' = ' + result;
+  var number1 = getNumber1();
+  var number2 = getNumber2();
+  var result = number1 ** number2;
+  label.textContent = number1 + ' x ' + number2 + ' = ' + result;
 }
 
 function updateDivideLabel() {
-  var addend1 = getNumber1();
-  var addend2 = getNumber2();
-  var result = addend1 / addend2;
-  label.textContent = addend1 + ' / ' + addend2 + ' = ' + result;
+  var number1 = getNumber1();
+  var number2 = getNumber2();
+  var result = number1 / number2;
+  label.textContent = number1 + ' / ' + number2 + ' = ' + result;
 }
 
 function updateSubtractLabel() {
-  var addend1 = getNumber1();
-  var addend2 = getNumber1();
-  var result = addend1 - addend2;
-  label.textContent = addend1 + ' - ' + addend1 + ' = ' + result;
+  var number1 = getNumber1();
+  var number2 = getNumber1();
+  var result = number1 - number2;
+  label.textContent = number1 + ' - ' + number1 + ' = ' + result;
 }
 
-var results = []
+var savedResults = []
 function updateSaveLabel() {
-  results.unshift(label.textContent);
+  savedResults.unshift(label.textContent);
   
   var combined = ""
-  results.forEach((res, index) => {
+  savedResults.forEach((res, index) => {
     const colour = getColour(res)
     const style = getStyle(index)
     combined += `<div style="color:${colour ?? "#ff000000"}; font-weight: ${style};"> ${res}</div>`
@@ -169,7 +169,7 @@ function updateSaveLabel() {
 }
 
 function updateInputs() {
-  var lastValue = results[results.length]
+  var lastValue = savedResults[savedResults.length]
   inputs[0].value = lastValue
   inputs[1].value = ""
 }
@@ -180,7 +180,7 @@ function getColour(res) {
   } 
   else if (res.includes("x")) { 
     return 'blue' 
-    }
+  }
   else if (res.includes("-")) { 
     return 'purple' 
   }
